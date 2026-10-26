@@ -1,0 +1,56 @@
+Controllers: receive request, define endpoints
+Services: business logic or functionality 
+Models/Entities: Data classes with attributes
+
+Services classes are static(?) so for example public static class PizzaService
+
+Methods that list/add/delete/update are defined in your service and then called in your controller. So the PizzaService would have a GetAll and that would be called in the controller
+
+Task<T> is like async await in javascript
+
+"dotnet ef migrations add ChangeDescription" -> part of ef core, used to change db schema, generates a migrations file that you can look attributes
+
+"dotnet ef database update" apply changes from above
+
+DI: Have to:
+1. register in Program.cs (DbBuilder as example)
+2. Declare (consumption) in controller. This is in the controller file in the constructor
+
+
+
+Run attributes:
+ Id (int) primary key
+ Ascension (int)
+ Character (string)
+ Won (boolean)
+ TimeElapsed (int in seconds)
+ TimeStarted (DateTime)
+ FloorReached (int)
+ RunJson (string)
+ BuildId (string)
+ GameMode (String)
+ Seed (String)
+ KilledByEncounter (string, nullable)
+ SchemaVersion (int)
+
+ CardChoices List<CardChoice> 
+ RelicChoices List<RelicChoice> 
+
+
+CardChoice attributes:
+Id (int) primary key
+RunId (int) foreign key
+CardId (string) 
+Picked (boolean)
+Act (int)
+Floor (int)
+Source (string)
+
+RelicChoice attributes: 
+Id (int) primary key
+RunId (int) foreign key
+RelicId (string) 
+Picked (boolean)
+Act (int)
+Floor (int)
+Source (string) 

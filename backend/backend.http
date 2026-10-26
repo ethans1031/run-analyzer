@@ -1,0 +1,21 @@
+# @backend_HostAddress = http://localhost:5079
+
+# GET {{backend_HostAddress}}/weatherforecast/
+# Accept: application/json
+
+# ###
+
+
+# POST https://localhost:7041/api/runs
+
+GET https://localhost:7041/api/runs/parse-test
+
+# POST https://localhost:7041/api/runs/upload
+# Content-Type: multipart/form-data; boundary=----RunBoundary
+
+# ------RunBoundary
+# Content-Disposition: form-data; name="file"; filename="1779464273.run"
+# Content-Type: application/json
+
+# < C:\Users\Ethan\AppData\Roaming\SlayTheSpire2\steam\76561198172300663\profile1\saves\history\1779847464.run
+# ------RunBoundary--
