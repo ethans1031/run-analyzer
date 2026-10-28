@@ -3,8 +3,9 @@ bin/
 obj/
 *.user
 .vs/
+TestResults/
 
-# SQLite database (your personal run data)
+# SQLite database (local run data)
 *.db
 *.db-shm
 *.db-wal
@@ -12,6 +13,7 @@ obj/
 # Node / Vite
 node_modules/
 dist/
+*.local
 
 # Editors / OS
 .vscode/*
