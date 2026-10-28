@@ -1,0 +1,4 @@
+<Solution>
+  <Project Path="backend/RunAnalyzer.Api/RunAnalyzer.Api.csproj" />
+  <Project Path="backend/RunAnalyzer.Api.Tests/RunAnalyzer.Api.Tests.csproj" />
+</Solution>
