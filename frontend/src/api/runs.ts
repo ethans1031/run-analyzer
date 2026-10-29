@@ -14,7 +14,6 @@ export interface RunFilters {
     relic?: string | null;
 }
 
-// Builds an API URL, skipping query params that are empty.
 function apiUrl(path: string, params: Record<string, string | null | undefined> = {}): string {
     const url = new URL(path, API_BASE_URL);
     for (const [key, value] of Object.entries(params)) {

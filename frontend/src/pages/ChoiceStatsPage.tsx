@@ -21,7 +21,7 @@ interface SortState {
     direction: "asc" | "desc";
 }
 
-// Everything that differs between the card page and the relic page.
+// Everything that differs between the card page and the relic page
 const PAGE_CONFIG = {
     card: {
         title: "Card Stats",
@@ -59,7 +59,7 @@ function sortValue(item: ChoiceStats, key: SortKey, formatName: (id: string) => 
     return key === "name" ? formatName(item.id) : item[key];
 }
 
-// Sorts by the chosen column; missing values (e.g. no win rate) always go last.
+// Sorts by the chosen column; missing values go last
 function sortItems(items: ChoiceStats[], sort: SortState, formatName: (id: string) => string): ChoiceStats[] {
     const sign = sort.direction === "asc" ? 1 : -1;
     return [...items].sort((a, b) => {
@@ -113,7 +113,7 @@ function ChoiceStatsPage({ kind }: { kind: Kind }) {
     const [enlargedImage, setEnlargedImage] = useState<string | null>(null);
 
     useEffect(() => {
-        let cancelled = false;  // ignore responses for a character the user has already changed
+        let cancelled = false;
 
         async function load() {
             try {
@@ -141,7 +141,7 @@ function ChoiceStatsPage({ kind }: { kind: Kind }) {
                 const stats = await getStats();
                 setCharacters(stats.byCharacter.map(c => c.character));
             } catch {
-                // The character filter is optional; the page works without it.
+                
             }
         }
         loadCharacters();

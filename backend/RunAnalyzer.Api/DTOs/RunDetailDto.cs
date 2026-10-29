@@ -1,6 +1,5 @@
 namespace RunAnalyzer.Api.DTOs;
 
-/// <summary>Full run shape for the detail view, including card and relic choices.</summary>
 public class RunDetailDto
 {
     public int Id { get; set; }

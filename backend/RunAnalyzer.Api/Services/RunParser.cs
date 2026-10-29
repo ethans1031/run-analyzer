@@ -3,21 +3,8 @@ using RunAnalyzer.Api.Entities;
 
 namespace RunAnalyzer.Api.Services;
 
-/// <summary>
-/// Turns the raw JSON of a Slay the Spire 2 .run file into a <see cref="Run"/>
-/// with its <see cref="CardChoice"/> and <see cref="RelicChoice"/> rows filled in.
-/// Has no HTTP or database dependencies, so it can be tested on its own.
-/// </summary>
-/// <remarks>
-/// Missing or invalid top-level fields throw <see cref="InvalidRunFileException"/>,
-/// because the file isn't a usable run. A malformed individual floor or choice is
-/// skipped instead, so one odd entry doesn't reject the whole run.
-/// </remarks>
 public class RunParser
 {
-    // Maps the file's map_point_type to the Source stored on each choice row.
-    // Source lets stats separate real choices (combat rewards, shops) from
-    // other ways a card or relic shows up. Unknown types keep their raw value.
     private static readonly Dictionary<string, string> SourceByMapPointType = new()
     {
         ["monster"] = "combat",
@@ -121,7 +108,6 @@ public class RunParser
 
     private static string? NullIfNone(string value) => value == NoneSentinel ? null : value;
 
-    // The character lives at players[0].character (the format supports multiplayer).
     private static string ParseCharacter(JsonElement root)
     {
         if (!root.TryGetProperty("players", out var players)
@@ -142,8 +128,6 @@ public class RunParser
         return character.GetString()!;
     }
 
-    // Reads the floor's Source and the first player's stats, or returns false
-    // if the floor is malformed or has no player stats (the caller skips it).
     private static bool TryGetFloorContext(JsonElement mapPoint, out string source, out JsonElement playerStats)
     {
         source = string.Empty;
@@ -174,7 +158,6 @@ public class RunParser
     private static bool WasPicked(JsonElement choice) =>
         choice.TryGetProperty("was_picked", out var wasPicked) && wasPicked.ValueKind == JsonValueKind.True;
 
-    // Each entry looks like { "card": { "id": "CARD.X", ... }, "was_picked": true }.
     private static void ExtractCardChoices(JsonElement mapPoint, int actIndex, int floorIndex, List<CardChoice> output)
     {
         if (!TryGetFloorContext(mapPoint, out var source, out var playerStats))
@@ -205,7 +188,6 @@ public class RunParser
         }
     }
 
-    // Each entry looks like { "choice": "RELIC.X", "was_picked": true }.
     private static void ExtractRelicChoices(JsonElement mapPoint, int actIndex, int floorIndex, List<RelicChoice> output)
     {
         if (!TryGetFloorContext(mapPoint, out var source, out var playerStats))

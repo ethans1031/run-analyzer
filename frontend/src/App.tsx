@@ -7,7 +7,6 @@ import RunDetailPage from "./pages/RunDetailPage";
 import UploadPage from "./pages/UploadPage";
 import ChoiceStatsPage from "./pages/ChoiceStatsPage";
 
-// Loaded on demand so the charting library isn't in the initial bundle.
 const StatsPage = lazy(() => import("./pages/StatsPage"));
 
 function App() {

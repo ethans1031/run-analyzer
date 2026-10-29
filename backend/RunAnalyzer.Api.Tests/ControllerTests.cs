@@ -9,10 +9,6 @@ using RunAnalyzer.Api.Services;
 
 namespace RunAnalyzer.Api.Tests;
 
-/// <summary>
-/// Runs the controllers against a real in-memory SQLite database, so these also
-/// check that the LINQ queries translate to SQL.
-/// </summary>
 public class ControllerTests : IDisposable
 {
     private readonly SqliteConnection _connection;

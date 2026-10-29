@@ -21,7 +21,6 @@ function formatOptionalDuration(seconds: number | null): string {
     return seconds === null ? "-" : formatDuration(Math.round(seconds));
 }
 
-// "2026-10-19" -> "Oct 19". Parsed as a plain date so the time zone can't shift the day.
 function formatWeek(isoDate: string): string {
     const [year, month, day] = isoDate.split("-").map(Number);
     return new Date(year, month - 1, day).toLocaleDateString(undefined, { month: "short", day: "numeric" });
@@ -58,7 +57,6 @@ function StatsPage() {
         );
     }
 
-    // Chart data: readable labels and win rates scaled to 0-100.
     const characterData = stats.byCharacter.map(c => ({
         character: formatCharacter(c.character),
         winRatePercent: Number((c.winRate * 100).toFixed(1)),

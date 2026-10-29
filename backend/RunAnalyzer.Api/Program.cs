@@ -29,8 +29,6 @@ builder.Services.AddCors(options =>
 
 var app = builder.Build();
 
-// Create the SQLite database and apply any pending migrations on startup,
-// so a fresh clone runs without a separate `dotnet ef database update` step.
 using (var scope = app.Services.CreateScope())
 {
     var db = scope.ServiceProvider.GetRequiredService<RunDbContext>();

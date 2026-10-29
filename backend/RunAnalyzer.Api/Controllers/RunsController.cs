@@ -20,10 +20,6 @@ public class RunsController : ControllerBase
         _parser = parser;
     }
 
-    /// <summary>
-    /// Lists runs, newest first, as lightweight summaries. Optionally filtered to runs
-    /// where a given card and/or relic was picked, e.g. ?card=CARD.GAMMA_BLAST&amp;relic=RELIC.ANCHOR.
-    /// </summary>
     [HttpGet]
     public async Task<ActionResult<List<RunSummaryDto>>> GetRuns(
         [FromQuery] string? card = null,
@@ -31,7 +27,6 @@ public class RunsController : ControllerBase
     {
         IQueryable<Run> query = _dbContext.Runs;
 
-        // Translates to EXISTS subqueries, so each run appears once however many times the item was picked.
         if (!string.IsNullOrWhiteSpace(card))
         {
             query = query.Where(r => r.CardChoices.Any(c => c.CardId == card && c.Picked));
@@ -59,7 +54,6 @@ public class RunsController : ControllerBase
         return Ok(runs);
     }
 
-    /// <summary>Returns one run with its card and relic choices.</summary>
     [HttpGet("{id}")]
     public async Task<ActionResult<RunDetailDto>> GetRun(int id)
     {
@@ -112,10 +106,7 @@ public class RunsController : ControllerBase
         return Ok(run);
     }
 
-    /// <summary>
-    /// Uploads one or more .run files. Each file is parsed and saved independently,
-    /// so one bad file doesn't block the rest. Runs already stored (same seed) are skipped.
-    /// </summary>
+
     [HttpPost("upload")]
     public async Task<ActionResult> UploadRuns([FromForm] List<IFormFile> files)
     {

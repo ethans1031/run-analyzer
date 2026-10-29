@@ -1,6 +1,3 @@
-// Shared recharts styling so every chart matches the dark theme in globals.css.
-// Grid and axes stay quiet; the data marks use the accent color.
-
 export const CHART_HEIGHT = 300;
 
 export const gridProps = {
@@ -28,5 +25,4 @@ export const tooltipProps = {
     separator: ": ",
 } as const;
 
-// 4px rounded tops on bars, square at the baseline.
 export const BAR_RADIUS: [number, number, number, number] = [4, 4, 0, 0];

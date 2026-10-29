@@ -6,7 +6,6 @@ import { getRuns, getCardStats, getRelicStats } from "../api/runs";
 import { formatCharacter, formatCard, formatRelic } from "../utils/format";
 import ItemFilter, { type ItemOption } from "../components/ItemFilter";
 
-// Filter suggestions: only items picked in at least one run, so every choice returns results.
 function toOptions(stats: ChoiceStatsResponse, formatName: (id: string) => string): ItemOption[] {
     return stats.items
         .filter(item => item.runsPicked > 0)
@@ -24,16 +23,13 @@ function RunListPage() {
     const [isLoading, setIsLoading] = useState(true);
     const [cardOptions, setCardOptions] = useState<ItemOption[]>([]);
     const [relicOptions, setRelicOptions] = useState<ItemOption[]>([]);
-
-    // Filters live in the URL (?card=...&relic=...) so they survive refresh,
-    // work with the back button, and can be linked to from the stats pages.
     const [searchParams, setSearchParams] = useSearchParams();
     const card = searchParams.get("card");
     const relic = searchParams.get("relic");
     const hasFilters = Boolean(card || relic);
 
     useEffect(() => {
-        let cancelled = false;  // ignore responses for filters the user has already changed
+        let cancelled = false;
 
         async function load() {
             try {
@@ -62,7 +58,7 @@ function RunListPage() {
                 setCardOptions(toOptions(cardStats, formatCard));
                 setRelicOptions(toOptions(relicStats, formatRelic));
             } catch {
-                // Suggestions are a convenience; the filters still work without them.
+
             }
         }
         loadOptions();

@@ -7,5 +7,4 @@ export interface CatalogValue {
     error: string | null;
 }
 
-// null default so using the context outside its provider fails loudly in useCatalog().
 export const CatalogContext = createContext<CatalogValue | null>(null);

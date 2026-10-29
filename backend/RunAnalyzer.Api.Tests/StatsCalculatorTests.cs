@@ -2,7 +2,6 @@ using RunAnalyzer.Api.Services;
 
 namespace RunAnalyzer.Api.Tests;
 
-/// <summary>Unit tests for the pure stats math in <see cref="StatsCalculator"/>.</summary>
 public class StatsCalculatorTests
 {
     private static readonly IReadOnlySet<string> CardSources = StatsCalculator.CardChoiceSources;
@@ -16,8 +15,8 @@ public class StatsCalculatorTests
         {
             new ChoiceRow("CARD.A", Picked: true, Source: "combat", RunId: 1, Won: true),
             new ChoiceRow("CARD.A", Picked: false, Source: "elite", RunId: 1, Won: true),
-            new ChoiceRow("CARD.A", Picked: false, Source: "shop", RunId: 2, Won: false),   // not a reward screen
-            new ChoiceRow("CARD.A", Picked: true, Source: "event", RunId: 3, Won: false),   // not a reward screen
+            new ChoiceRow("CARD.A", Picked: false, Source: "shop", RunId: 2, Won: false),
+            new ChoiceRow("CARD.A", Picked: true, Source: "event", RunId: 3, Won: false),
         };
 
         var stats = Assert.Single(StatsCalculator.CalculateChoiceStats(rows, CardSources, baselineWinRate: 0.5));
