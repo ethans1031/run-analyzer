@@ -14,7 +14,6 @@ namespace RunAnalyzer.Api.Migrations
     [Migration("20260522213427_AddRunsTable")]
     partial class AddRunsTable
     {
-        /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618

@@ -2,18 +2,12 @@ import { useEffect, useState } from "react";
 import type { ReactNode } from "react";
 import { CatalogContext, type CatalogValue } from "./catalogContext";
 
-// Public Spire Codex API: card and relic metadata plus artwork.
 const SPIRE_CODEX_BASE = "https://spire-codex.com";
 
-// Strip "CARD." or "RELIC." prefix to match Spire Codex's ID format.
 function normalizeId(id: string): string {
     return id.replace(/^(CARD|RELIC)\./, "");
 }
 
-/**
- * Loads the Spire Codex card and relic catalog once at app startup and exposes
- * synchronous image lookups by game ID. Consumers read it with useCatalog().
- */
 export function CatalogProvider({ children }: { children: ReactNode }) {
     const [cardImages, setCardImages] = useState<Map<string, string>>(new Map());
     const [relicImages, setRelicImages] = useState<Map<string, string>>(new Map());

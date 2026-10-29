@@ -2,32 +2,18 @@ using RunAnalyzer.Api.DTOs;
 
 namespace RunAnalyzer.Api.Services;
 
-/// <summary>One card or relic choice flattened together with its run's ID and result.</summary>
 public record ChoiceRow(string ItemId, bool Picked, string Source, int RunId, bool Won);
 
-/// <summary>The few run fields the trend stats need.</summary>
 public record RunFact(DateTime TimeStarted, bool Won, int FloorReached);
 
-/// <summary>
-/// Pure stats math, kept separate from the controllers so it can be unit tested
-/// without a database. Inputs are small (one row per choice or per run), so
-/// these run in memory after a single flat query.
-/// </summary>
 public static class StatsCalculator
 {
-    /// <summary>Card reward screens: pick one of three, or skip.</summary>
     public static readonly IReadOnlySet<string> CardChoiceSources = new HashSet<string> { "combat", "elite", "boss" };
 
-    /// <summary>Shops are the only place relics are a real choice; other sources just grant one.</summary>
     public static readonly IReadOnlySet<string> RelicChoiceSources = new HashSet<string> { "shop" };
 
     public const int FloorBucketSize = 5;
 
-    /// <summary>
-    /// Builds per-item stats. Pick rate only counts offers from <paramref name="choiceSources"/>.
-    /// Win rate counts distinct runs where the item was picked from any source, so taking
-    /// the same card twice in one run still counts that run once.
-    /// </summary>
     public static List<ChoiceStatsDto> CalculateChoiceStats(
         IEnumerable<ChoiceRow> rows,
         IReadOnlySet<string> choiceSources,
@@ -68,7 +54,6 @@ public static class StatsCalculator
             .ToList();
     }
 
-    /// <summary>Monday of the week containing <paramref name="timestamp"/>.</summary>
     public static DateOnly WeekStart(DateTime timestamp)
     {
         var date = DateOnly.FromDateTime(timestamp);
@@ -96,7 +81,6 @@ public static class StatsCalculator
             .ToList();
     }
 
-    /// <summary>Most wins in a row, in the order the runs were started.</summary>
     public static int LongestWinStreak(IEnumerable<RunFact> runs)
     {
         int longest = 0;
@@ -109,10 +93,6 @@ public static class StatsCalculator
         return longest;
     }
 
-    /// <summary>
-    /// Counts losses per floor range (1-5, 6-10, ...) from floor 1 up to the
-    /// furthest loss, including empty ranges so a chart's x-axis has no gaps.
-    /// </summary>
     public static List<FloorBucketDto> CalculateLossesByFloor(IEnumerable<RunFact> runs, int bucketSize = FloorBucketSize)
     {
         var lossCounts = runs

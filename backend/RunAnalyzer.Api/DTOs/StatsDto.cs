@@ -12,26 +12,20 @@ public class RunStatsDto
 
     public double AverageFloorReached { get; set; }
 
-    /// <summary>Average length of winning runs in seconds, or null if there are none.</summary>
     public double? AverageWinTime { get; set; }
 
-    /// <summary>Average length of losing runs in seconds, or null if there are none.</summary>
     public double? AverageLossTime { get; set; }
 
-    /// <summary>Most consecutive wins, by start time.</summary>
     public int LongestWinStreak { get; set; }
 
     public List<CharacterStatsDto> ByCharacter { get; set; } = new();
 
     public List<AscensionStatsDto> ByAscension { get; set; } = new();
 
-    /// <summary>Encounters that ended the most runs, most common first.</summary>
     public List<KillerStatsDto> TopKillers { get; set; } = new();
 
-    /// <summary>Losses grouped into floor ranges, with empty ranges included.</summary>
     public List<FloorBucketDto> LossesByFloor { get; set; } = new();
 
-    /// <summary>Runs and win rate per calendar week (weeks start on Monday).</summary>
     public List<WeeklyStatsDto> ByWeek { get; set; } = new();
 }
 

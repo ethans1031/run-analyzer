@@ -20,7 +20,6 @@ public class StatsController : ControllerBase
         _dbContext = dbContext;
     }
 
-    /// <summary>Overall, per-character, per-ascension, and trend stats across all runs.</summary>
     [HttpGet]
     public async Task<ActionResult<RunStatsDto>> GetStats()
     {
@@ -37,7 +36,6 @@ public class StatsController : ControllerBase
         var totalLosses = totalRuns - totalWins;
         var averageFloor = await runs.AverageAsync(r => (double)r.FloorReached);
 
-        // Nullable projection so Average returns null instead of throwing when there are no wins (or losses).
         var averageWinTime = await runs.Where(r => r.Won).Select(r => (double?)r.TimeElapsed).AverageAsync();
         var averageLossTime = await runs.Where(r => !r.Won).Select(r => (double?)r.TimeElapsed).AverageAsync();
 
@@ -73,8 +71,7 @@ public class StatsController : ControllerBase
             ShareOfLosses = totalLosses > 0 ? (double)k.Count / totalLosses : 0,
         }).ToList();
 
-        // Weekly, floor-range, and streak stats are computed in memory: one small row per run,
-        // and week math isn't something SQLite can translate cleanly.
+
         var runFacts = await runs
             .Select(r => new RunFact(r.TimeStarted, r.Won, r.FloorReached))
             .ToListAsync();
@@ -97,10 +94,7 @@ public class StatsController : ControllerBase
         });
     }
 
-    /// <summary>
-    /// Pick rate and win rate for every card that appears in the runs, optionally
-    /// limited to one character. Pick rate counts reward screens (combat, elite, boss).
-    /// </summary>
+
     [HttpGet("cards")]
     public async Task<ActionResult<ChoiceStatsResponseDto>> GetCardStats([FromQuery] string? character = null)
     {
@@ -116,11 +110,7 @@ public class StatsController : ControllerBase
         return Ok(await BuildChoiceStatsAsync(runs, choiceRows, StatsCalculator.CardChoiceSources));
     }
 
-    /// <summary>
-    /// Buy rate and win rate for every relic that appears in the runs, optionally
-    /// limited to one character. Buy rate counts shop offers, the only relic choice
-    /// the run file records; win rate counts every run that had the relic.
-    /// </summary>
+
     [HttpGet("relics")]
     public async Task<ActionResult<ChoiceStatsResponseDto>> GetRelicStats([FromQuery] string? character = null)
     {

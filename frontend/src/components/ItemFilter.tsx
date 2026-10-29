@@ -15,13 +15,6 @@ interface ItemFilterProps {
     onChange: (id: string | null) => void;
 }
 
-/**
- * Text input with autocomplete suggestions (a native datalist) for picking one
- * card or relic. Typing a full name from the list selects it.
- *
- * The parent should pass key={selectedId} so the input text resets whenever the
- * selection changes from outside (e.g. arriving from a link with ?card=...).
- */
 function ItemFilter({ label, placeholder, options, selectedId, formatName, onChange }: ItemFilterProps) {
     const [text, setText] = useState(selectedId ? formatName(selectedId) : "");
     const inputId = useId();

@@ -4,10 +4,8 @@
 
 namespace RunAnalyzer.Api.Migrations
 {
-    /// <inheritdoc />
     public partial class AddChoiceEntities : Migration
     {
-        /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.RenameColumn(
@@ -118,7 +116,6 @@ namespace RunAnalyzer.Api.Migrations
                 column: "RunId");
         }
 
-        /// <inheritdoc />
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(

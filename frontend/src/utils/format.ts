@@ -23,7 +23,7 @@ export function groupChoicesByFloor(choices: CardChoice[]): FloorGroup[] {
         groups.get(key)!.choices.push(choice);
     }
 
-    // Sort by act, then floor.
+    // Sort by act, then floor
     return Array.from(groups.values()).sort((a, b) => {
         if (a.act !== b.act) return a.act - b.act;
         return a.floor - b.floor;
@@ -68,12 +68,10 @@ export function formatDuration(seconds: number): string {
     return `${minutes}m ${secs}s`;
 }
 
-// For values that can be missing, like a win rate for a card that was never picked.
 export function formatOptionalPercent(value: number | null): string {
     return value === null ? "-" : formatPercent(value);
 }
 
-// Difference between two rates, shown in percentage points with a sign: "+5.2%".
 export function formatSignedPercent(value: number | null): string {
     if (value === null) return "-";
     const points = (value * 100).toFixed(1);

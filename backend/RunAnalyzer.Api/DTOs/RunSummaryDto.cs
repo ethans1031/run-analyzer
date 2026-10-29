@@ -1,6 +1,5 @@
 namespace RunAnalyzer.Api.DTOs;
 
-/// <summary>Lightweight run shape for the runs list.</summary>
 public class RunSummaryDto
 {
     public int Id { get; set; }

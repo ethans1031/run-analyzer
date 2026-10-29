@@ -3,10 +3,6 @@ using RunAnalyzer.Api.Services;
 
 namespace RunAnalyzer.Api.Tests;
 
-/// <summary>
-/// Unit tests for <see cref="RunParser"/>. Small hand-built JSON documents cover
-/// individual rules; the real sample runs in /samples cover the full file format.
-/// </summary>
 public class RunParserTests
 {
     private readonly RunParser _parser = new();
